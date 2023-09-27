@@ -2,7 +2,7 @@ var base_path = 'function' === typeof importScripts ? '.' : '/search/';
 var allowSearch = false;
 var index;
 var documents = {};
-var lang = ['zh'];
+var lang = ['en'];
 var data;
 
 function getScript(script, callback) {

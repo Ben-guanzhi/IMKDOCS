@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>1.4 &nbsp; 处理器读并解释储存在内存中的指令 - 深入理解计算机系统</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "1.4 \u0026nbsp; \u5904\u7406\u5668\u8bfb\u5e76\u89e3\u91ca\u50a8\u5b58\u5728\u5185\u5b58\u4e2d\u7684\u6307\u4ee4";
+        var mkdocs_page_input_path = "1\\1.4.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> 深入理解计算机系统
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">第 0 章 &nbsp; 前言</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../0/">前言</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../0/0.1/">0.1 &nbsp; 关于作者</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 1 章 &nbsp; 计算机系统漫游</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">第 1 章：计算机系统漫游</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.1/">1.1 &nbsp; 信息就是位+上下文</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.2/">1.2 &nbsp; 程序被其他程序翻译成不同的格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.3/">1.3 &nbsp; 了解编译系统如何工作是大有益处的</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">1.4 &nbsp; 处理器读并解释储存在内存中的指令</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#141">1.4.1 系统的硬件组成 </a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1">1. 总线 </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-io">2. I/O 设备 </a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3">3. 主存</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4">4. 处理器</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#142-hello">1.4.2 运行 hello 程序 </a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.5/">1.5 &nbsp; 高速缓存至关重要</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.6/">1.6 &nbsp; 存储设备形成层次结构</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.7/">1.7 &nbsp; 操作系统管理硬件</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.8/">1.8 &nbsp; 系统之间利用网络通信</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.9/">1.9 &nbsp; 重要主题</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../1.10/">1.10 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 2 章 &nbsp; 信息的表示与处理</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../2/">第 2 章：信息的表示和处理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../2/2.1/">2.1 &nbsp; 信息存储</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../2/2.2/">2.2 &nbsp; 整数表示</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../2/2.3.md">2.3 &nbsp; 整数运算</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../2/2.4.md">2.4 &nbsp; 浮点数</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../2/2.5.md">2.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 3 章 &nbsp; 程序的机器级表示</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../3/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../3/3.1.md">3.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../3/3.2.md">3.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../3/3.3.md">3.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../3/3.4.md">3.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../3/3.5.md">3.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 4 章 &nbsp; 处理器体系结构</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../4/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../4/4.1.md">4.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../4/4.2.md">4.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../4/4.3.md">4.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../4/4.4.md">4.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../4/4.5.md">4.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 5 章 &nbsp; 优化程序性能</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../5/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../5/5.1.md">5.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../5/5.2.md">5.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../5/5.3.md">5.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../5/5.4.md">5.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../5/5.5.md">5.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 6 章 &nbsp; 存储器层次结构</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../6/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../6/6.1.md">6.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../6/6.2.md">6.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../6/6.3.md">6.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../6/6.4.md">6.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../6/6.5.md">6.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 7 章 &nbsp; 链接</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../7/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../7/7.1.md">7.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../7/7.2.md">7.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../7/7.3.md">7.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../7/7.4.md">7.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../7/7.5.md">7.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 8 章 &nbsp; 异常控制流</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../8/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../8/8.1.md">8.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../8/8.2.md">8.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../8/8.3.md">8.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../8/8.4.md">8.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../8/8.5.md">8.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 9 章 &nbsp; 虚拟内存</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../9/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../9/9.1.md">9.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../9/9.2.md">9.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../9/9.3.md">9.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../9/9.4.md">9.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../9/9.5.md">9.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 10 章 &nbsp; 系统级I/O</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../10/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../10/10.1.md">10.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../10/10.2.md">10.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../10/10.3.md">10.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../10/10.4.md">10.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../10/10.5.md">10.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 11 章 &nbsp; 网络编程</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../11/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../11/11.1.md">11.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../11/11.2.md">11.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../11/11.3.md">11.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../11/11.4.md">11.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../11/11.5.md">11.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">第 12 章 &nbsp; 并发编程</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../../12/index.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../12/12.1.md">12.1 &nbsp; 历史观点</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../12/12.2.md">12.2 &nbsp; 程序编码</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../12/12.3.md">12.3 &nbsp; 数据格式</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../12/12.4.md">12.4 &nbsp; 访问信息</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../12/12.5.md">12.5 &nbsp; 小结</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">深入理解计算机系统</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>第 1 章 &nbsp; 计算机系统漫游 &raquo;</li>
+      <li class="breadcrumb-item active">1.4 &nbsp; 处理器读并解释储存在内存中的指令</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="14">1.4 处理器读并解释储存在内存中的指令</h1>
+<p>此刻，hello.c 源程序已经被编译系统翻译成了可执行目标文件 hello，并被存放在磁盘上。要想在 Unix 系统上运行该可执行文件，我们将它的文件名输入到称为 shell 的应用程序中∶ </p>
+<pre><code class="language-text">linux&gt; ./hello
+hello, world
+linux&gt; 
+</code></pre>
+<p>shell 是一个命令行解释器，它输出一个提示符，等待输入一个命令行，然后执行这个命令。如果该命令行的第一个单词不是一个内置的 shell 命令，那么 shell 就会假设这是一个可执行文件的名字，它将加载并运行这个文件。所以在此例中，shell 将加载并运行 hello 程序，然后等待程序终止。hello 程序在屏幕上输出它的消息，然后终止。shell 随后输出一个提示符，等待下一个输入的命令行。</p>
+<h2 id="141">1.4.1 系统的硬件组成 <a id="1"></a></h2>
+<p>为了理解运行 hello 程序时发生了什么，我们需要了解一个典型系统的硬件组织，如图 1-4 所示。这张图是近期 Intel 系统产品族的模型，但是所有其他系统也有相同的外观和特性。现在不要担心这张图很复杂——我们将在本书分阶段对其进行详尽的介绍。</p>
+<h3 id="1">1. 总线 <a id="1-1"></a></h3>
+<p>贯穿整个系统的是一组电子管道，称作<strong>总线</strong>，它携带信息字节并负责在各个部件间传递。通常总线被设计成传送定长的字节块，也就是字（word）。字中的字节数（即字长）是一个基本的系统参数，各个系统中都不尽相同。现在的大多数机器字长要么是 4 个字节（32 位），要么是 8 个字节（64 位）。本书中，我们不对字长做任何固定的假设。相反，我们将在需要明确定义的上下文中具体说明一个“字”是多大。 </p>
+<h3 id="2-io">2. I/O 设备 <a id="1-2"></a></h3>
+<p>I/O（输入/输出）设备是系统与外部世界的联系通道。我们的示例系统包括四个 I/O 设备∶作为用户输入的键盘和鼠标，作为用户输出的显示器，以及用于长期存储数据和程序的磁盘驱动器（简单地说就是磁盘）。最开始，可执行程序 hello 就存放在磁盘上。</p>
+<p>每个 I/O 设备都通过一个<strong>控制器</strong>或<strong>适配器</strong>与 I/O 总线相连。控制器和适配器之间的区别主要在于它们的封装方式。控制器是 I/O 设备本身或者系统的主印制电路板（通常称作主板）上的芯片组。而适配器则是一块插在主板插槽上的卡。无论如何，它们的功能都是在 I/O 总线和 I/O 设备之间传递信息。</p>
+<p><img alt="" src="../../_imgs/1/1-1-4-0.png" /></p>
+<blockquote>
+<p>图 1-4 一个典型系统的硬件组成</p>
+<p>CPU：中央处理单元；ALU：算术/逻辑单元；PC：程序计数器；USB：通用串行总线</p>
+</blockquote>
+<p>第 6 章会更多地说明磁盘之类的 I/O 设备是如何工作的。在第 10 章中，你将学习如何在应用程序中利用 Unix I/O 接口访问设备。我们将特别关注网络类设备，不过这些技术对于其他设备来说也是通用的。 </p>
+<h3 id="3">3. 主存</h3>
+<p><strong>主存</strong>是一个临时存储设备，在处理器执行程序时，用来存放程序和程序处理的数据。从物理上来说，主存是由一组<strong>动态随机存取存储器</strong>（DRAM）芯片组成的。从逻辑上来说，存储器是一个线性的字节数组，每个字节都有其唯一的地址（数组索引），这些地址是从零开始的。一般来说，组成程序的每条机器指令都由不同数量的字节构成。与 C 程序变量相对应的数据项的大小是根据类型变化的。比如，在运行 Linux 的 x86-64 机器上，short 类型的数据需要 2 个字节，int 和 float 类型需要 4 个字节，而 long 和 double 类型需要 8 个字节。 第 6 章将具体介绍存储器技术，比如 DRAM 芯片是如何工作的，它们又是如何组合起来构成主存的。 </p>
+<h3 id="4">4. 处理器</h3>
+<p><strong>中央处理单元</strong>（CPU），简称<strong>处理器</strong>，是解释（或执行）存储在主存中指令的引擎。处理器的核心是一个大小为一个字的存储设备（或<strong>寄存器</strong>），称为<strong>程序计数器</strong>（PC）。在任何时刻，PC 都指向主存中的某条机器语言指令（即含有该条指令的地址）。</p>
+<p>{% hint style="info" %}
+PC 也普遍地被用来作为“个人计算机”的缩写。然面，两者之间的区别应该可以很清楚地从上下文中看出来。
+{% endhint %}</p>
+<p>从系统通电开始，直到系统断电，处理器一直在不断地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个非常简单的指令执行模型来操作的，这个模型是由指令集架构决定的。在这个模型中，指令按照严格的顺序执行，而执行一条指令包含执行一系列的步骤。处理器从程序计数器指向的内存处读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新 PC，使其指向下一条指令，而这条指令并不一定和在内存中刚刚执行的指令相邻。</p>
+<p>这样的简单操作并不多，它们围绕着主存、<strong>寄存器文件</strong>（register file）和<strong>算术/逻辑单元</strong>（ALU）进行。寄存器文件是一个小的存储设备，由一些单个字长的寄存器组成，每个寄存器都有唯一的名字。ALU 计算新的数据和地址值。下面是一些简单操作的例子，CPU 在指令的要求下可能会执行这些操作。</p>
+<ul>
+<li><strong>加载：</strong>从主存复制一个字节或者一个字到寄存器，以覆盖寄存器原来的内容。</li>
+<li><strong>存储：</strong>从寄存器复制一个字节或者一个字到主存的某个位置，以覆盖这个位置上原 来的内容。 </li>
+<li><strong>操作：</strong>把两个寄存器的内容复制到 ALU，ALU 对这两个字做算术运算，并将结果存放到一个寄存器中，以覆盖该寄存器中原来的内容。 </li>
+<li><strong>跳转：</strong>从指令本身中抽取一个字，并将这个字复制到程序计数器（PC）中，以覆盖 PC 中原来的值。</li>
+</ul>
+<p>处理器看上去是它的指令集架构的简单实现，但是实际上现代处理器使用了非常复杂的机制来加速程序的执行。因此，我们将处理器的指令集架构和处理器的<strong>微体系结构</strong>区分开来：指令集架构描述的是每条机器代码指令的效果；而微体系结构描述的是处理器实际上是如何实现的。在第 3 章研究机器代码时，我们考虑的是机器的指令集架构所提供的抽象性。第 4 章将更详细地介绍处理器实际上是如何实现的。第 5 章用一个模型说明现代处理器是如何工作的，从而能预测和优化机器语言程序的性能。</p>
+<h2 id="142-hello">1.4.2 运行 hello 程序 <a id="2"></a></h2>
+<p>前面简单描述了系统的硬件组成和操作，现在开始介绍当我们运行示例程序时到底发生了些什么。在这里必须省略很多细节，稍后会做补充，但是现在我们将很满意于这种整体上的描述。 初始时，shell 程序执行它的指令，等待我们输人一个命令。当我们在键盘上输人字符串 “./hello” 后，shell 程序将字符逐一读入寄存器，再把它存放到内存中，如图 1-5 所示。</p>
+<p><img alt="&#x56FE; 1-5 &#x4ECE;&#x952E;&#x76D8;&#x4E0A;&#x8BFB;&#x53D6; hello &#x547D;&#x4EE4;" src="../../_imgs/1/1-1-4-1.png" /></p>
+<p>当我们在键盘上敲回车键时，shell 程序就知道我们已经结束了命令的输入。然后 shell 执行一系列指令来加载可执行的 hello 文件，这些指令将 hello 目标文件中的代码和数据从磁盘复制到主存。数据包括最终会被输出的字符串 “hello, world\n”。</p>
+<p>利用<strong>直接存储器存取</strong>（DMA，将在第 6 章中讨论）技术，数据可以不通过处理器而直接从磁盘到达主存。这个步骤如图 1-6 所示。</p>
+<p><img alt="&#x56FE; 1-6 &#x4ECE;&#x78C1;&#x76D8;&#x52A0;&#x8F7D;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x5230;&#x4E3B;&#x5B58;" src="../../_imgs/1/1-1-4-2.png" /></p>
+<p>一旦目标文件 hello 中的代码和数据被加载到主存，处理器就开始执行 hello 程序的 main 程序中的机器语言指令。这些指令将 “hello, world\n” 字符串中的字节从主存复制到寄存器文件，再从寄存器文件中复制到显示设备，最终显示在屏幕上。这个步骤如图 1-7 所示。</p>
+<p><img alt="&#x56FE; 1-7 &#x5C06;&#x8F93;&#x51FA;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x5B58;&#x50A8;&#x5668;&#x5199;&#x5230;&#x663E;&#x793A;&#x5668;" src="../../_imgs/1/1-1-4-3.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../1.3/" class="btn btn-neutral float-left" title="1.3 &nbsp; 了解编译系统如何工作是大有益处的"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../1.5/" class="btn btn-neutral float-right" title="1.5 &nbsp; 高速缓存至关重要">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../1.3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../1.5/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
