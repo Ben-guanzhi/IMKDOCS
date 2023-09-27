@@ -1,12 +1,37 @@
 site_name: 深入理解计算机系统
-theme: readthedocs
+#rtd-dropdown
+# mkdocs.yml 相关配置
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+theme:
+  name: mkdocs
+  language: zh
+  features:
+    - navigation.instant # 点击内部链接时，不用全部刷新页面
+    - navigation.tracking # 在url中使用标题定位锚点
+    - navigation.tabs # 顶部显示导航顶层nav（也就是第一个节点）
+    - navigation.tabs.sticky # 滚动是隐藏顶部nav，需要配合navigation.tabs使用
+    - navigation.sections # nav节点缩进
+    - navigation.expand # 不折叠左侧nav节点
+    - navigation.indexes # 指定节点index pages ，跟instant不兼容
+    - toc.integrate # 右侧生产目录
+    - navigation.top # 一键回顶部
+    - content.code.copy
+    - content.code.annotate
+
 # Page tree
 nav:
-  - 第 0 章 &nbsp; 前言:
-        # [icon: material/book-open-outline]
+  - 主页:
+    - 封面: index.md
     - 0/index.md
-    - 0.1 &nbsp; 关于作者: 0/0.1.md
-  - 第 1 章 &nbsp; 计算机系统漫游:
+    - 0.1 关于作者: 0/0.1.md
+  - 第 1 章 :
     # [icon: material/book-open-outline]
     - 1/index.md
     - 1.1 &nbsp; 信息就是位+上下文: 1/1.1.md
@@ -19,91 +44,94 @@ nav:
     - 1.8 &nbsp; 系统之间利用网络通信: 1/1.8.md
     - 1.9 &nbsp; 重要主题: 1/1.9.md
     - 1.10 &nbsp; 小结: 1/1.10.md
-  - 第 2 章 &nbsp; 信息的表示与处理:
-    # [icon: material/book-open-outline]
-    - 2/index.md
-    - 2.1 &nbsp; 信息存储: 2/2.1.md
-    - 2.2 &nbsp; 整数表示: 2/2.2.md
-    - 2.3 &nbsp; 整数运算: 2/2.3.md
-    - 2.4 &nbsp; 浮点数: 2/2.4.md
-    - 2.5 &nbsp; 小结: 2/2.5.md
-  - 第 3 章 &nbsp; 程序的机器级表示:
+  - 第一部分：程序结构和执行:
+    - 第 2 章 &nbsp; 信息的表示与处理:
       # [icon: material/book-open-outline]
-      - 3/index.md
-      - 3.1 &nbsp; 历史观点: 3/3.1.md
-      - 3.2 &nbsp; 程序编码: 3/3.2.md
-      - 3.3 &nbsp; 数据格式: 3/3.3.md
-      - 3.4 &nbsp; 访问信息: 3/3.4.md
-      - 3.5 &nbsp; 小结: 3/3.5.md
-  - 第 4 章 &nbsp; 处理器体系结构:
-      # [icon: material/book-open-outline]
-      - 4/index.md
-      - 4.1 &nbsp; 历史观点: 4/4.1.md
-      - 4.2 &nbsp; 程序编码: 4/4.2.md
-      - 4.3 &nbsp; 数据格式: 4/4.3.md
-      - 4.4 &nbsp; 访问信息: 4/4.4.md
-      - 4.5 &nbsp; 小结: 4/4.5.md
-  - 第 5 章 &nbsp; 优化程序性能:
-      # [icon: material/book-open-outline]
-      - 5/index.md
-      - 5.1 &nbsp; 历史观点: 5/5.1.md
-      - 5.2 &nbsp; 程序编码: 5/5.2.md
-      - 5.3 &nbsp; 数据格式: 5/5.3.md
-      - 5.4 &nbsp; 访问信息: 5/5.4.md
-      - 5.5 &nbsp; 小结: 5/5.5.md
-  - 第 6 章 &nbsp; 存储器层次结构:
-      # [icon: material/book-open-outline]
-      - 6/index.md
-      - 6.1 &nbsp; 历史观点: 6/6.1.md
-      - 6.2 &nbsp; 程序编码: 6/6.2.md
-      - 6.3 &nbsp; 数据格式: 6/6.3.md
-      - 6.4 &nbsp; 访问信息: 6/6.4.md
-      - 6.5 &nbsp; 小结: 6/6.5.md
-  - 第 7 章 &nbsp; 链接:
-      # [icon: material/book-open-outline]
-      - 7/index.md
-      - 7.1 &nbsp; 历史观点: 7/7.1.md
-      - 7.2 &nbsp; 程序编码: 7/7.2.md
-      - 7.3 &nbsp; 数据格式: 7/7.3.md
-      - 7.4 &nbsp; 访问信息: 7/7.4.md
-      - 7.5 &nbsp; 小结: 7/7.5.md
-  - 第 8 章 &nbsp; 异常控制流:
-      # [icon: material/book-open-outline]
-      - 8/index.md
-      - 8.1 &nbsp; 历史观点: 8/8.1.md
-      - 8.2 &nbsp; 程序编码: 8/8.2.md
-      - 8.3 &nbsp; 数据格式: 8/8.3.md
-      - 8.4 &nbsp; 访问信息: 8/8.4.md
-      - 8.5 &nbsp; 小结: 8/8.5.md
-  - 第 9 章 &nbsp; 虚拟内存:
-      # [icon: material/book-open-outline]
-      - 9/index.md
-      - 9.1 &nbsp; 历史观点: 9/9.1.md
-      - 9.2 &nbsp; 程序编码: 9/9.2.md
-      - 9.3 &nbsp; 数据格式: 9/9.3.md
-      - 9.4 &nbsp; 访问信息: 9/9.4.md
-      - 9.5 &nbsp; 小结: 9/9.5.md
-  - 第 10 章 &nbsp; 系统级I/O:
-      # [icon: material/book-open-outline]
-      - 10/index.md
-      - 10.1 &nbsp; 历史观点: 10/10.1.md
-      - 10.2 &nbsp; 程序编码: 10/10.2.md
-      - 10.3 &nbsp; 数据格式: 10/10.3.md
-      - 10.4 &nbsp; 访问信息: 10/10.4.md
-      - 10.5 &nbsp; 小结: 10/10.5.md
-  - 第 11 章 &nbsp; 网络编程:
-      # [icon: material/book-open-outline]
-      - 11/index.md
-      - 11.1 &nbsp; 历史观点: 11/11.1.md
-      - 11.2 &nbsp; 程序编码: 11/11.2.md
-      - 11.3 &nbsp; 数据格式: 11/11.3.md
-      - 11.4 &nbsp; 访问信息: 11/11.4.md
-      - 11.5 &nbsp; 小结: 11/11.5.md
-  - 第 12 章 &nbsp; 并发编程:
-      # [icon: material/book-open-outline]
-      - 12/index.md
-      - 12.1 &nbsp; 历史观点: 12/12.1.md
-      - 12.2 &nbsp; 程序编码: 12/12.2.md
-      - 12.3 &nbsp; 数据格式: 12/12.3.md
-      - 12.4 &nbsp; 访问信息: 12/12.4.md
-      - 12.5 &nbsp; 小结: 12/12.5.md
+      - 2/index.md
+      - 2.1 &nbsp; 信息存储: 2/2.1.md
+      - 2.2 &nbsp; 整数表示: 2/2.2.md
+      - 2.3 &nbsp; 整数运算: 2/2.3.md
+      - 2.4 &nbsp; 浮点数: 2/2.4.md
+      - 2.5 &nbsp; 小结: 2/2.5.md
+    - 第 3 章 &nbsp; 程序的机器级表示:
+        # [icon: material/book-open-outline]
+        - 3/index.md
+        - 3.1 &nbsp; 历史观点: 3/3.1.md
+        - 3.2 &nbsp; 程序编码: 3/3.2.md
+        - 3.3 &nbsp; 数据格式: 3/3.3.md
+        - 3.4 &nbsp; 访问信息: 3/3.4.md
+        - 3.5 &nbsp; 小结: 3/3.5.md
+    - 第 4 章 &nbsp; 处理器体系结构:
+        # [icon: material/book-open-outline]
+        - 4/index.md
+        - 4.1 &nbsp; 历史观点: 4/4.1.md
+        - 4.2 &nbsp; 程序编码: 4/4.2.md
+        - 4.3 &nbsp; 数据格式: 4/4.3.md
+        - 4.4 &nbsp; 访问信息: 4/4.4.md
+        - 4.5 &nbsp; 小结: 4/4.5.md
+    - 第 5 章 &nbsp; 优化程序性能:
+        # [icon: material/book-open-outline]
+        - 5/index.md
+        - 5.1 &nbsp; 历史观点: 5/5.1.md
+        - 5.2 &nbsp; 程序编码: 5/5.2.md
+        - 5.3 &nbsp; 数据格式: 5/5.3.md
+        - 5.4 &nbsp; 访问信息: 5/5.4.md
+        - 5.5 &nbsp; 小结: 5/5.5.md
+    - 第 6 章 &nbsp; 存储器层次结构:
+        # [icon: material/book-open-outline]
+        - 6/index.md
+        - 6.1 &nbsp; 历史观点: 6/6.1.md
+        - 6.2 &nbsp; 程序编码: 6/6.2.md
+        - 6.3 &nbsp; 数据格式: 6/6.3.md
+        - 6.4 &nbsp; 访问信息: 6/6.4.md
+        - 6.5 &nbsp; 小结: 6/6.5.md
+  - 第二部分：程序结构和执行:
+    - 第 7 章 &nbsp; 链接:
+        # [icon: material/book-open-outline]
+        - 7/index.md
+        - 7.1 &nbsp; 历史观点: 7/7.1.md
+        - 7.2 &nbsp; 程序编码: 7/7.2.md
+        - 7.3 &nbsp; 数据格式: 7/7.3.md
+        - 7.4 &nbsp; 访问信息: 7/7.4.md
+        - 7.5 &nbsp; 小结: 7/7.5.md
+    - 第 8 章 &nbsp; 异常控制流:
+        # [icon: material/book-open-outline]
+        - 8/index.md
+        - 8.1 &nbsp; 历史观点: 8/8.1.md
+        - 8.2 &nbsp; 程序编码: 8/8.2.md
+        - 8.3 &nbsp; 数据格式: 8/8.3.md
+        - 8.4 &nbsp; 访问信息: 8/8.4.md
+        - 8.5 &nbsp; 小结: 8/8.5.md
+    - 第 9 章 &nbsp; 虚拟内存:
+        # [icon: material/book-open-outline]
+        - 9/index.md
+        - 9.1 &nbsp; 历史观点: 9/9.1.md
+        - 9.2 &nbsp; 程序编码: 9/9.2.md
+        - 9.3 &nbsp; 数据格式: 9/9.3.md
+        - 9.4 &nbsp; 访问信息: 9/9.4.md
+        - 9.5 &nbsp; 小结: 9/9.5.md
+  - 第三部分：程序结构和执行:
+    - 第 10 章 &nbsp; 系统级I/O:
+        # [icon: material/book-open-outline]
+        - 10/index.md
+        - 10.1 &nbsp; 历史观点: 10/10.1.md
+        - 10.2 &nbsp; 程序编码: 10/10.2.md
+        - 10.3 &nbsp; 数据格式: 10/10.3.md
+        - 10.4 &nbsp; 访问信息: 10/10.4.md
+        - 10.5 &nbsp; 小结: 10/10.5.md
+    - 第 11 章 &nbsp; 网络编程:
+        # [icon: material/book-open-outline]
+        - 11/index.md
+        - 11.1 &nbsp; 历史观点: 11/11.1.md
+        - 11.2 &nbsp; 程序编码: 11/11.2.md
+        - 11.3 &nbsp; 数据格式: 11/11.3.md
+        - 11.4 &nbsp; 访问信息: 11/11.4.md
+        - 11.5 &nbsp; 小结: 11/11.5.md
+    - 第 12 章 &nbsp; 并发编程:
+        # [icon: material/book-open-outline]
+        - 12/index.md
+        - 12.1 &nbsp; 历史观点: 12/12.1.md
+        - 12.2 &nbsp; 程序编码: 12/12.2.md
+        - 12.3 &nbsp; 数据格式: 12/12.3.md
+        - 12.4 &nbsp; 访问信息: 12/12.4.md
+        - 12.5 &nbsp; 小结: 12/12.5.md
