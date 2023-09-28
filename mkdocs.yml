@@ -1,7 +1,17 @@
 site_name: 深入理解计算机系统
 #rtd-dropdown
 # mkdocs.yml 相关配置
+# mkdocs.yml 相关配置
 markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - tables
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -9,6 +19,10 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+  - attr_list
+  - md_in_html
+extra_css:
+    - stylesheets/extra.css
 theme:
   name: mkdocs
   language: zh
@@ -22,8 +36,22 @@ theme:
     - navigation.indexes # 指定节点index pages ，跟instant不兼容
     - toc.integrate # 右侧生产目录
     - navigation.top # 一键回顶部
-    - content.code.copy
+    - content.code.copy # 代码复制按钮
     - content.code.annotate
+  plugins:
+    - search:
+#        separator: '[\s\u200b\-]'
+      lang:
+        - en
+        - zh
+        - ja
+    - tags
+    - git-revision-date-localized:
+        type: datetime
+        timezone: Asia/Shanghai
+        enable_creation_date: true
+        exclude:
+          - comments.md
 
 # Page tree
 nav:
