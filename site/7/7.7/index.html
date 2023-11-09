@@ -564,7 +564,7 @@
 </ul>
 <p>这两种重定位类型支持 x86-64 <strong>小型代码模型</strong>（small code model），该模型假设可执行目标文件中的代码和数据的总体大小小于 2GB，因此在运行时可以用 32 位 PC 相对地址来访问。GCC 默认使用小型代码模型。大于 2GB 的程序可以用 -mcmodel=medium（中型代码模型）和 -mcmodel=large（大型代码模型）标志来编译，不过在此我们不讨论这些模型。</p>
 <h2 id="772">7.7.2 重定位符号引用</h2>
-<p>图 7-10 展示了链接器的重定位算法的伪代码。第 1 行和第 2 行在每个节 s 以及与每个节相关联的重定位条目 r 上迭代执行。为了使描述具体化，假设每个节 s 是一个字节数组，每个重定位条目 r 是一个类型为 Elf64_Rela 的结构，如图 7-9 中的定义。另外，还假设当算法运行时，链接器已经为每个节（用 ADDR(s) 表示）和每个符号都选择了运行时地址（用 ADDR(r.symbol) 表示）。第 3 行计算的是需要被重定位的 4 字节引用的数组 s 中的地址。如果这个引用使用的是 PC 相对寻址，那么它就用第 5 ~ 9 行来重定位。如果该引用使用的是绝对寻址，它就通过第 11 ~ 13 行来重定位。</p>
+<p>图 7-10 展示了链接器的重定位算法的伪代码。第 1 行和第 2 行在每个节 s 以及与每个节相关联的重定位条目 r 上迭代执行。为了使描述具体化，假设每个节 s 是一个字节数组，每个重定位条目 r 是一个类型为 Elf64_Rela 的结构，如图 7-9 中的定义。另外，还假设当算法运行时，链接器已经为每个节（用 ADDR<span class="arithmatex">\(s\)</span> 表示）和每个符号都选择了运行时地址（用 ADDR<span class="arithmatex">\(r.symbol\)</span> 表示）。第 3 行计算的是需要被重定位的 4 字节引用的数组 s 中的地址。如果这个引用使用的是 PC 相对寻址，那么它就用第 5 ~ 9 行来重定位。如果该引用使用的是绝对寻址，它就通过第 11 ~ 13 行来重定位。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">foreach</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">foreach</span><span class="w"> </span><span class="n">relocation</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="n">refptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">offset</span><span class="p">;</span><span class="w">  </span><span class="cm">/* ptr to reference to be relocated */</span>
@@ -716,9 +716,9 @@
 <p>{% tabs %}
 {% tab title="答案" %}
 这道题是测试你对链接器重定位PC相对引用的理解的。给定</p>
-<p><strong>ADDR(s) = ADDR(.text) = 0x4004d0</strong></p>
+<p><strong>ADDR<span class="arithmatex">\(s\)</span> = ADDR<span class="arithmatex">\(.text\)</span> = 0x4004d0</strong></p>
 <p>和</p>
-<p><strong>ADDR(r.symbol) = ADDR(swap) = 0x4004e8</strong></p>
+<p><strong>ADDR<span class="arithmatex">\(r.symbol\)</span> = ADDR<span class="arithmatex">\(swap\)</span> = 0x4004e8</strong></p>
 <p>使用图 7-10 中的算法，链接器首先计算引用的运行时地址：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">refaddr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADDR</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">offset</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mh">0x4004d0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">0xa</span>
@@ -747,6 +747,9 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">

@@ -548,7 +548,7 @@
 <p>第 3 行和第 4 行告诉我们第二个段（数据段）有读/写访问权限，开始于内存地址 0x600df8 处，总的内存大小为 0x230 字节，并用从目标文件中偏移 0xdf8 处开始的 .data 节中的 0x228 个字节初始化。该段中剩下的 8 个字节对应于运行时将被初始化为 0 的 .bss 数据。</p>
 <p>对于任何段 s，链接器必须选择一个起始地址 vaddr，使得</p>
 <p><strong>vaddr mod align = off mod align</strong></p>
-<p>这里，off 是目标文件中段的第一个节的偏移量，align 是程序头部中指定的对齐（ $$2^{21}$$ = 0x200000）。例如，图 7-14 中的数据段中</p>
+<p>这里，off 是目标文件中段的第一个节的偏移量，align 是程序头部中指定的对齐（ <span class="arithmatex">\(<span class="arithmatex">\(2^{21}\)</span>\)</span> = 0x200000）。例如，图 7-14 中的数据段中</p>
 <p><strong>vaddr mod align = 0x600df8 mod 0x200000 = 0xdf8</strong></p>
 <p>以及</p>
 <p><strong>off mod align = 0xdf8 mod 0x200000 = 0xdf8</strong></p>
@@ -567,6 +567,9 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">

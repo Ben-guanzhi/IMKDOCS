@@ -558,7 +558,7 @@
 <p>{% hint style="info" %}</p>
 <h3 id="-c-java">旁注 - 对 C++ 和 Java 中链接器符号的重整</h3>
 <p>C++ 和 Java 都允许重载方法，这些方法在源代码中有相同的名字，却有不同的参数列表。那么链接器是如何区别这些不同的重载函数之间的差异呢？C++ 和 Java 中能使用重载函数，是因为编译器将每个唯一的方法和参数列表组合编码成一个对链接器来说唯一的名字。这种编码过程叫做重整（mangling），而相反的过程叫做恢复（demangling）。</p>
-<p _="%" endhint="endhint">幸运的是，C++ 和 Java 使用兼容的重整策略。一个被重整的类名字是由名字中字符的整数数量，后面跟原始名字组成的。比如，类 Foo 被编码成 3Foo。方法被编码为原始方法名，后面加上 __，加上被重整的类名，再加上每个参数的单字母编码。比如，Foo::bar(int，long) 被编码为 bar__3Fooil。重整全局变量和模板名字的策略是相似的。</p>
+<p _="%" endhint="endhint">幸运的是，C++ 和 Java 使用兼容的重整策略。一个被重整的类名字是由名字中字符的整数数量，后面跟原始名字组成的。比如，类 Foo 被编码成 3Foo。方法被编码为原始方法名，后面加上 __，加上被重整的类名，再加上每个参数的单字母编码。比如，Foo::bar<span class="arithmatex">\(int，long\)</span> 被编码为 bar__3Fooil。重整全局变量和模板名字的策略是相似的。</p>
 <h2 id="761">7.6.1 链接器如何解析多重定义的全局符号</h2>
 <p>链接器的输入是一组可重定位目标模块。每个模块定义一组符号，有些是局部的（只对定义该符号的模块可见），有些是全局的（对其他模块也可见）。如果多个模块定义同名的全局符号，会发生什么呢？下面是 Linux 编译系统采用的方法。</p>
 <p>在编译时，编译器向汇编器输岀每个全局符号，或者是强（strong）或者是弱（weak），而汇编器把这个信息隐含地编码在可重定位目标文件的符号表里。函数和已初始化的全局变量是强符号，未初始化的全局变量是弱符号。</p>
@@ -688,10 +688,10 @@
 <h3 id="72">练习题 7.2</h3>
 <p>{% tabs %}
 {% tab title="练习题 7.2" %}
-在此题中，REF(x.i) → DEF(x.k) 表示链接器将把模块 i 中对符号 x 的任意引用与模块 k 中 x 的定义关联起来。对于下面的每个示例，用这种表示法来说明链接器将如何解析每个模块中对多重定义符号的引用。如果有一个链接时错误（规则 1），写“错误”。如果链接器从定义中任意选择一个（规则 3），则写“未知”。</p>
+在此题中，REF<span class="arithmatex">\(x.i\)</span> → DEF<span class="arithmatex">\(x.k\)</span> 表示链接器将把模块 i 中对符号 x 的任意引用与模块 k 中 x 的定义关联起来。对于下面的每个示例，用这种表示法来说明链接器将如何解析每个模块中对多重定义符号的引用。如果有一个链接时错误（规则 1），写“错误”。如果链接器从定义中任意选择一个（规则 3），则写“未知”。</p>
 <p>A.</p>
-<p>(a) REF(main.1) → DEF(____.__)</p>
-<p>(b) REF(main.2) → DEF(____.__)</p>
+<p><span class="arithmatex">\(a\)</span> REF<span class="arithmatex">\(main.1\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
+<p><span class="arithmatex">\(b\)</span> REF<span class="arithmatex">\(main.2\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cm">/* Module 1 */</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">{</span>
@@ -704,8 +704,8 @@
 <a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="p">}</span>
 </code></pre></div>
 <p>B.</p>
-<p>(a) REF(main.1) → DEF(____.__)</p>
-<p>(b) REF(main.2) → DEF(____.__)</p>
+<p><span class="arithmatex">\(a\)</span> REF<span class="arithmatex">\(main.1\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
+<p><span class="arithmatex">\(b\)</span> REF<span class="arithmatex">\(main.2\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cm">/* Module 1 */</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">{</span>
@@ -718,8 +718,8 @@
 <a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="p">}</span>
 </code></pre></div>
 <p>C.</p>
-<p>(a) REF(x.1) → DEF(____.__)</p>
-<p>(b) REF(x.2) → DEF(____.__)</p>
+<p><span class="arithmatex">\(a\)</span> REF<span class="arithmatex">\(x.1\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
+<p><span class="arithmatex">\(b\)</span> REF<span class="arithmatex">\(x.2\)</span> → DEF<span class="arithmatex">\(\_\_\_\_.\_\_\)</span></p>
 <p _="%" endtabs="endtabs"><div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cm">/* Module 1 */</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
@@ -737,12 +737,12 @@
 {% tab title="答案" %}
 这是一个简单的练习，检査你对 Unix 链接器解析在一个以上模块中有定义的全局符号时所使用规则的理解。理解这些规则可以帮助你避免一些讨厌的编程错误。</p>
 <p>A. 链接器选择定义在模块 1 中的强符号，而不是定义在模块 2 中的弱符号（规则 2）：</p>
-<p>（a）REF(main.1) → DEF（main.1）</p>
-<p>（b）REF(main.2) → DEF（main.1）</p>
+<p>（a）REF<span class="arithmatex">\(main.1\)</span> → DEF（main.1）</p>
+<p>（b）REF<span class="arithmatex">\(main.2\)</span> → DEF（main.1）</p>
 <p>B. 这是一个错误，因为每个模块都定义了一个强符号 main（规则 1）。</p>
 <p>C. 链接器选择定义在模块 2 中的强符号，而不是定义在模块 1 中的弱符号（规则 2）：</p>
-<p>（a）REF(x.1) → DEF（x.2）</p>
-<p _="%" endtabs="endtabs">（b）REF(x.2) → DEF（x.2）
+<p>（a）REF<span class="arithmatex">\(x.1\)</span> → DEF（x.2）</p>
+<p _="%" endtabs="endtabs">（b）REF<span class="arithmatex">\(x.2\)</span> → DEF（x.2）
 {% endtab %}</p>
 <h2 id="762">7.6.2 与静态链接库</h2>
 <p>迄今为止，我们都是假设链接器读取一组可重定位目标文件，并把它们链接起来，形成一个输出的可执行文件。实际上，所有的编译系统都提供一种机制，将所有相关的目标模块打包成为一个单独的文件，称为<strong>静态库</strong>（staticlibrary），它可以用做链接器的输入。当链接器构造一个输出的可执行文件时，它只复制静态库里被应用程序引用的目标模块。</p>
@@ -881,6 +881,9 @@ a 和 b 表示当前目录中的目标模块或者静态库，而 a → b 表示
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">

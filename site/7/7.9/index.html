@@ -532,7 +532,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">linux</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">prog</span>
 </code></pre></div>
 <p>因为 prog 不是一个内置的 shell 命令，所以 shell 会认为 prog 是一个可执行目标文件，通过调用某个驻留在存储器中称为加载器（loader）的操作系统代码来运行它。任何 Linux 程序都可以通过调用 execve 函数来调用加载器，我们将在 8.4.6 节中详细描述这个函数。加载器将可执行目标文件中的代码和数据从磁盘复制到内存中，然后通过跳转到程序的第一条指令或入口点来运行该程序。这个将程序复制到内存并运行的过程叫做<strong>加载</strong>。</p>
-<p>每个 Linux 程序都有一个运行时内存映像，类似于图 7-15 中所示。在 Linux 86-64 系统中，代码段总是从地址 0x400000 处开始，后面是数据段。运行时<strong>堆</strong>在数据段之后，通过调用 malloc 库往上增长。（我们将在 9.9 节中详细描述 mallow 和堆。）堆后面的区域是为共享模块保留的。用户栈总是从最大的合法用户地址（ $$\small 2^{48}-1$$ ）开始，向较小内存地址增长。栈上的区域，从地址 $$\small 2^{48}$$ 开始，是为<strong>内核</strong>（kernel）中的代码和数据保留的，所谓内核就是操作系统驻留在内存的部分。</p>
+<p>每个 Linux 程序都有一个运行时内存映像，类似于图 7-15 中所示。在 Linux 86-64 系统中，代码段总是从地址 0x400000 处开始，后面是数据段。运行时<strong>堆</strong>在数据段之后，通过调用 malloc 库往上增长。（我们将在 9.9 节中详细描述 mallow 和堆。）堆后面的区域是为共享模块保留的。用户栈总是从最大的合法用户地址（ <span class="arithmatex">\(<span class="arithmatex">\(\small 2^{48}-1\)</span>\)</span> ）开始，向较小内存地址增长。栈上的区域，从地址 <span class="arithmatex">\(<span class="arithmatex">\(\small 2^{48}\)</span>\)</span> 开始，是为<strong>内核</strong>（kernel）中的代码和数据保留的，所谓内核就是操作系统驻留在内存的部分。</p>
 <p>为了简洁，我们把堆、数据和代码段画得彼此相邻，并且把栈顶放在了最大的合法用户地址处。实际上，由于 .data 段有对齐要求（见 7.8 节），所以代码段和数据段之间是有间隙的。同时，在分配栈、共享库和堆段运行时地址的时候，链接器还会使用地址空间布局随机化（ASLR，参见 3.10.4 节）。虽然每次程序运行时这些区域的地址都会改变，它们的相对位置是不变的。</p>
 <p>当加载器运行时，它创建类似于图 7-15 所示的内存映像。在程序头部表的引导下，加载器将可执行文件的片（chunk）复制到代码段和数据段。接下来，加载器跳转到程序的入口点，也就是 <code>_start</code>函数的地址。这个函数是在系统目标文件 ctrl.o 中定义的，对所有的 C 程序都是一样的。<code>_start</code> 函数调用系统启动函数 __libc_start_main，该函数定义在 libc.so 中。它初始化执行环境，调用用户层的 main 函数，处理 main 函数的返回值，并且在需要的时候把控制返回给内核。</p>
 <p><img alt="" src="../../.gitbook/assets/0715-linux-x8664-yun-hang-shi-nei-cun-ying-xiang-.png" /></p>
@@ -557,6 +557,9 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
