@@ -1157,13 +1157,11 @@ sion), 在表示中添加最高有效位的值，表示为如下原理。 我们
 <img alt="图2-20" src="../../_imgs/2/2-2-2-20.png" width="800" />
 &emsp;&emsp;有了这个直觉，我们现在可以展示保持补码值的符号扩展。<br />
 &emsp;&emsp;推导：补码数值的符号扩展<br />
-&emsp;&emsp;令 w'=w+k, 我们想要证明的是
- $$
-\begin{split}
-B2T_{w+k}([\underbrace{x_{w-1},\cdots,x_{w-1}},x_{w-1},x_{w-2},\cdots,x_0]) &amp;= B2T_{w}([x_{w-1},x_{w-2},\cdots,x_{0}]) \newline
-\end{split}
-$$
-&emsp;&emsp;下面的证明是对 K 进行归纳。也就是说，如果我们能够证明符号扩展一位保持了数值
+&emsp;&emsp;令 w'=w+k, 我们想要证明的是</p>
+<div class="arithmatex">\[
+B2T_{w+k}([\underbrace{x_{w-1},\cdot\cdot\cdot,x_{w-1}}_{k次},x_{w-1},x_{w-2},\cdot\cdot\cdot,x_0])=B2T_w([x_{w-1},x_{w-2},\cdot\cdot\cdot,x_0])
+\]</div>
+<p>&emsp;&emsp;下面的证明是对 K 进行归纳。也就是说，如果我们能够证明符号扩展一位保持了数值
 不变，那么符号扩展任意位都能保持这种属性。因此，证明的任务就变为了：<br />
 $$
 \begin{split}
@@ -1255,8 +1253,8 @@ A. 填写下表，说明这些函数对几个示例参数的结果。你会发�
 <p>&emsp;&emsp;当我们把x强制类型转换为short时，我们就将 32 位的 int 截断为了 16 位的 short int
 就像前面所看到的，这个 16 位的位模式就是一 12 345 的补码表示。当我们把它强制类型
 转换回int时，符号扩展把高 16 位设置为 1, 从而生成一 12 345的32 位补码表示。<br />
-&emsp;&emsp;当将一个w位的数<span class="arithmatex">\(\vec{x}\)</span>= [x<sub>w-1</sub>, X<sub>w-2</sub>, …，x<sub>0</sub>]截断为一个 位数字时，我们会丢弃高
-w-k 位，得到一个位向量 <span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup> = [x<sub>k-1</sub>, X<sub>k-2</sub>, …，x<sub>0</sub>]。截断一个数字可能会改变它的值一
+&emsp;&emsp;当将一个w位的数<span class="arithmatex">\(\vec{x}= [x_{w-1}, x_{w-2}, \cdots,x_0]\)</span>截断为一个 位数字时，我们会丢弃高
+w-k 位，得到一个位向量 <span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup> = <span class="arithmatex">\([x_{k-1}, x_{k-2}, \cdots,x_0]\)</span>。截断一个数字可能会改变它的值一
 溢出的一种形式。对千一个无符号数，我们可以很容易得出其数值结果。<br />
 &emsp;&emsp;原理：截断无符号数<br />
 &emsp;&emsp;令<span class="arithmatex">\(\vec{x}\)</span>等于位向量[x<sub>w-1</sub>, X<sub>w-2</sub>, …，x<sub>0</sub>], 而<span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup>是将其截断为 K 位的结果：<span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup> = [x<sub>w-1</sub>, X<sub>w-2</sub>, …，x<sub>0</sub>]
@@ -1264,12 +1262,14 @@ w-k 位，得到一个位向量 <span class="arithmatex">\(\vec{x}\)</span><sup>
 &emsp;&emsp;该原理背后的直觉就是所有被截去的位其权重形式都为 2<sup>i</sup> 其中 i<span class="arithmatex">\(\geq\)</span>k, 因此，每一个
 权在取模操作下结果都为零。可用如下推导表示：<br />
 &emsp;&emsp;推导：截断无符号数<br />
-&emsp;&emsp;通过对等式 (2. 1) 应用取模运算就可以看到：<br />
-&emsp;&emsp;&emsp;&emsp;B2U<sub>w</sub>([x<sub>w-1</sub>, x<sub>w-2</sub>,\cdots,x<sub>0</sub>])mod 2<sup>k</sup> =   [<span class="arithmatex">\(\sum\limits_{i=0}^{w-1}\)</span>x<sub>i</sub>2<sup>i</sup>]  mod 2<sup>k</sup><br />
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; = [<span class="arithmatex">\(\sum\limits_{i=0}^{k-1}\)</span>x<sub>i</sub>2<sup>i</sup>]  mod 2<sup>k</sup><br />
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; = <span class="arithmatex">\(\sum\limits_{i=0}^{k-1}\)</span>x<sub>i</sub>2<sup>i</sup><br />
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; = B2U<sub>k</sub>([x<sub>k-1</sub>, x<sub>k-2</sub>,\cdots,x<sub>0</sub>])<br />
-在这段推导中，我们利用了属性：对于任何i<span class="arithmatex">\(\geq\)</span>k, 2<sup>i</sup> mod 2<sup>k</sup> =0<br />
+&emsp;&emsp;通过对等式 (2. 1) 应用取模运算就可以看到：  </p>
+<div class="arithmatex">\[\begin{aligned}
+B 2 U_{w}\left(\left[x_{w-1}, x_{w-2}, \cdots, x_{0}\right]\right) \bmod 2^{k} &amp; =\left[\sum_{i=0}^{w-1} x_{i} 2^{i}\right] \bmod 2^{k} \\
+&amp; =\left[\sum_{i=0}^{k-1} x_{i} 2^{i}\right] \bmod 2^{k} \\
+&amp; =\sum_{i=0}^{k-1} x_{i} 2^{i} \\
+&amp; =B 2 U_{k}\left(\left[x_{k-1}, x_{k-2}, \cdots, x_{0}\right]\right)
+\end{aligned}\]</div>
+<p>在这段推导中，我们利用了属性：对于任何i<span class="arithmatex">\(\geq\)</span>k, 2<sup>i</sup> mod 2<sup>k</sup> =0<br />
 &emsp;&emsp;补码截断也具有相似的属性，只不过要将最高位转换为符号位：<br />
 &emsp;&emsp;原理：截断补码数值<br />
 令<span class="arithmatex">\(\vec{x}\)</span>等于位向量[x<sub>w-1</sub>, X<sub>w-2</sub>, …，x<sub>0</sub>], 而<span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup>是将其截断为 K 位的结果：<span class="arithmatex">\(\vec{x}\)</span><sup>‘</sup> = [x<sub>k-1</sub>, X<sub>k-2</sub>, …，x<sub>0</sub>]。
@@ -1280,13 +1280,22 @@ int 转换为 short 。由千 2<sup>16</sup> = 65 536<span class="arithmatex">\(
 转换为 16 位的补码时，我们得到 x'=53 191—65 536= -12 345<br />
 &emsp;&emsp;推导：截断补码数值<br />
 &emsp;&emsp;使用与无符号数截断相同的参数，则有<br />
-&emsp;&emsp;&emsp;&emsp;B2U<sub>w</sub>(x<sub>w-1</sub>, x<sub>w-2</sub>,\cdots,x<sub>0</sub>])mod 2<sup>k</sup> = B2U<sub>k</sub>[x<sub>k-1</sub>, x<sub>k-2</sub>,\cdots,x<sub>0</sub>]<br />
-也就是， x mod 2<sup>k</sup>能够被一个位级表示为 [x<sub>k-1</sub>, x<sub>k-2</sub>,\cdots,x<sub>0</sub>] 的无符号数表示。将其转
-换为补码数则有 x'=U2T<sub>k</sub> (x mod 2<sup>k</sup>)<br />
+$$
+B2U_w([x_{k-1}, x_{k-2},\cdots,x_0])mod 2^k = B2U_k[x_{k-1}, x_{k-2},\cdots,x_0]<br />
+$$
+也就是， <span class="arithmatex">\(x\)</span> mod <span class="arithmatex">\(2^k\)</span>能够被一个位级表示为 <span class="arithmatex">\([x_{k-1}, x_{k-2},\cdots,x_0]\)</span> 的无符号数表示。将其转
+换为补码数则有 <span class="arithmatex">\(x'=U2T_k (x mod 2^k)\)</span><br />
 &emsp;&emsp;总而言之，无符号数的截断结果是：<br />
-&emsp;&emsp;&emsp;&emsp;B2U<sub>k</sub>[x<sub>k-1</sub>, x<sub>k-2</sub>,\cdots,x<sub>0</sub>] = B2U<sub>w</sub>(x<sub>w-1</sub>, x<sub>w-2</sub>,\cdots,x<sub>0</sub>])mod 2<sup>k</sup> &emsp;&emsp;(2. 9)<br />
+$$
+B2U_k[x_{k-1}, x_{k-2},\cdots,x_0] = B2U_w(x_{w-1}, x_{w-2},\cdots,x_0])mod 2^k 
+&emsp;&emsp;(2. 9) 
+$$
 而补码数字的截断结果是：<br />
-&emsp;&emsp;&emsp;&emsp;B2T<sub>k</sub>[x<sub>k-1</sub>, x<sub>k-2</sub>,\cdots,x<sub>0</sub>] =U2T<sub>k</sub>(B2U<sub>w</sub>(x<sub>w-1</sub>, x<sub>w-2</sub>,\cdots,x<sub>0</sub>])) mod 2<sup>k</sup> (2. 10)</p>
+$$
+B2T_k[x_{k-1}, x_{k-2},\cdots,x_0] =U2T_k(B2U_w(x_{w-1}, x_{w-2},\cdots,x_0])) mod 2^k 
+&emsp;&emsp;(2. 10) 
+$$</p>
+<!--<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>-->
 <blockquote>
 <p><font color=Blue>练习题 2. 24</font> 假设将一个 位数值（用十六进制数字 O~F 表示）截断到一个 位数值
 （用十六进制数字 0~7 表示）。填写下表，根据那些位模式的无符号和补码解释，说
@@ -1319,7 +1328,7 @@ int 转换为 short 。由千 2<sup>16</sup> = 65 536<span class="arithmatex">\(
 </blockquote>
 <hr />
 <blockquote>
-<p><font color=Blue>练习题 26</font> 现在给你一个任务，写一个函数用来判定一个字符串是否比另一个更
+<p><font color=Blue>练习题 2. 26</font> 现在给你一个任务，写一个函数用来判定一个字符串是否比另一个更
 长。前提是你要用字符串库函数 strlen, 它的声明如下：</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cm">/* Prototype for library function strlen */</span>
